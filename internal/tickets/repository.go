@@ -7,11 +7,10 @@ import (
 	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
 )
 
-
 type Repository interface {
 	GetAll(ctx context.Context) ([]domain.Ticket, error)
 	GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
-    GetAveragePerCountry(ctx context.Context, destination string) (int, error)
+	GetAveragePerCountry(ctx context.Context, destination string) (int, error)
 }
 
 type repository struct {
@@ -52,4 +51,5 @@ func (r *repository) GetTicketByDestination(ctx context.Context, destination str
 
 func (r *repository) GetAveragePerCountry(ctx context.Context, destination string) (int, error) {
 
+	return 0, nil
 }
