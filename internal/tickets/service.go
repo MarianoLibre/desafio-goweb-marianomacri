@@ -1,10 +1,16 @@
 package tickets
 
-import "github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
+import (
+	"context"
+
+	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
+)
+
 
 type Service interface {
-    GetAll() ([]domain.Ticket, error)
-    GetTicketByDestination(destination string) ([]domain.Ticket, error)
+    GetAll(ctx context.Context) ([]domain.Ticket, error)
+    GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
+    GetAveragePerCountry(ctx context.Context, destination string)
 }
 
 
@@ -18,12 +24,22 @@ func NewService(r Repository) Service {
 	}
 }
 
-func (s *service) GetAll() ([]domain.Ticket, error) {
-
-    return nil, nil
+func (s *service) GetAll(ctx context.Context) ([]domain.Ticket, error) {
+    ts, err := s.repository.GetAll(ctx)
+    if err != nil {
+        return nil, err
+    }
+    return ts, nil
 }
 
-func (s *service) GetTicketByDestination(destination string) ([]domain.Ticket, error) {
+func (s *service) GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error) {
+    ts, err := s.repository.GetTicketByDestination(ctx, destination)
+    if err != nil {
+        return nil, err
+    }
+    return ts, nil
+}
 
-    return nil, nil
+func (s *service) GetAveragePerCountry(ctx context.Context, destination string) {
+
 }

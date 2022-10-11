@@ -11,6 +11,7 @@ import (
 type Repository interface {
 	GetAll(ctx context.Context) ([]domain.Ticket, error)
 	GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
+    GetAveragePerCountry(ctx context.Context, destination string)
 }
 
 type repository struct {
@@ -47,4 +48,8 @@ func (r *repository) GetTicketByDestination(ctx context.Context, destination str
 	}
 
 	return ticketsDest, nil
+}
+
+func (r *repository) GetAveragePerCountry(ctx context.Context, destination string) {
+
 }
