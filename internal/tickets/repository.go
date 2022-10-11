@@ -7,6 +7,7 @@ import (
 	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
 )
 
+
 type Repository interface {
 	GetAll(ctx context.Context) ([]domain.Ticket, error)
 	GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
