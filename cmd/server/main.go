@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"desafio-go-web/internal/domain"
+	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
 	"github.com/gin-gonic/gin"
 )
 

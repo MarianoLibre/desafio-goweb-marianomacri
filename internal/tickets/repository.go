@@ -3,7 +3,8 @@ package tickets
 import (
 	"context"
 	"fmt"
-
+    
+    "github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
 )
 
 type Repository interface {
