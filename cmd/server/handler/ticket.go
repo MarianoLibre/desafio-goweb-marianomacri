@@ -45,17 +45,13 @@ func (s *Service) GetTicketsByCountry() gin.HandlerFunc {
 	}
 }
 
-func (s *Service) AverageDestination() gin.HandlerFunc {
+func (s *Service) MostVisited() gin.HandlerFunc {
 	return func(c *gin.Context) {
+        mv, err := s.service.GetMostVisited(c)
+        if err != nil {
+            c.String(http.StatusInternalServerError, err.Error(), nil)
+        }
 
-		destination := c.Param("dest")
-
-		avg, err := s.service.GetAveragePerCountry(c, destination)
-		if err != nil {
-			c.String(http.StatusInternalServerError, err.Error(), nil)
-			return
-		}
-
-		c.JSON(200, avg)
+        c.JSON(200, gin.H{"most visited country": mv})
 	}
 }

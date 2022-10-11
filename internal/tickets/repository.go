@@ -10,7 +10,7 @@ import (
 type Repository interface {
 	GetAll(ctx context.Context) ([]domain.Ticket, error)
 	GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
-	GetAveragePerCountry(ctx context.Context, destination string) (int, error)
+	GetMostVisited(ctx context.Context) (string, error)
 }
 
 type repository struct {
@@ -49,7 +49,25 @@ func (r *repository) GetTicketByDestination(ctx context.Context, destination str
 	return ticketsDest, nil
 }
 
-func (r *repository) GetAveragePerCountry(ctx context.Context, destination string) (int, error) {
+func (r *repository) GetMostVisited(ctx context.Context) (string, error) {
+    mostVisited := make(map[string]int)
+    for _, ticket := range r.db {
+        _, ok := mostVisited[ticket.Country]
+        if !ok {
+            mostVisited[ticket.Country] = 1
+        } else {
+            mostVisited[ticket.Country]++
+        }
+    }
 
-	return 0, nil
+    country := ""
+    count := 0
+    for k, v := range mostVisited {
+        if v > count {
+            count = v
+            country = k
+        }
+    }
+
+	return country, nil
 }

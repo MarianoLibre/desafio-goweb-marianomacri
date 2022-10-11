@@ -31,7 +31,7 @@ func main() {
 	{
 		ts.GET("/all", h.GetAll())
 		ts.GET("/bycountry/:dest", h.GetTicketsByCountry())
-		ts.GET("/average", h.AverageDestination())
+		ts.GET("/mostvisited", h.MostVisited())
 	}
 	// GET - “/ticket/getByCountry/:dest”
 	// GET - “/ticket/getAverage/:dest”
