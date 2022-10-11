@@ -10,7 +10,7 @@ import (
 type Service interface {
     GetAll(ctx context.Context) ([]domain.Ticket, error)
     GetTicketByDestination(ctx context.Context, destination string) ([]domain.Ticket, error)
-    GetAveragePerCountry(ctx context.Context, destination string)
+    GetAveragePerCountry(ctx context.Context, destination string) (int, error)
 }
 
 
@@ -40,6 +40,7 @@ func (s *service) GetTicketByDestination(ctx context.Context, destination string
     return ts, nil
 }
 
-func (s *service) GetAveragePerCountry(ctx context.Context, destination string) {
+func (s *service) GetAveragePerCountry(ctx context.Context, destination string) (int, error) {
 
+    return 0, nil
 }

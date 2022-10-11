@@ -6,22 +6,33 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/MarianoLibre/desafio-goweb-marianomacri/cmd/server/handler"
 	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/domain"
+	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/tickets"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
 	// Cargo csv.
-	list, err := LoadTicketsFromFile("../../tickets.csv")
+	db, err := LoadTicketsFromFile("../../tickets.csv")
 	if err != nil {
 		panic("Couldn't load tickets")
 	}
 
+    repo := tickets.NewRepository(db)
+    service := tickets.NewService(repo)
+    h := handler.NewService(service)
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) { c.String(200, "pong") })
 	// Rutas a desarollar:
 
+    ts := r.Group("/tickets")
+    {
+        ts.GET("/all", h.GetAll())
+        ts.GET("/bycountry/:dest", h.GetTicketsByCountry())
+        ts.GET("/average", h.AverageDestination())
+    }
 	// GET - “/ticket/getByCountry/:dest”
 	// GET - “/ticket/getAverage/:dest”
 	if err := r.Run(); err != nil {

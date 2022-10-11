@@ -5,6 +5,7 @@ import (
 
 	"github.com/MarianoLibre/desafio-goweb-marianomacri/internal/tickets"
 	"github.com/gin-gonic/gin"
+	"github.com/go-delve/delve/service"
 )
 
 type Service struct {
@@ -17,12 +18,25 @@ func NewService(s tickets.Service) *Service {
 	}
 }
 
+func (s *Service) GetAll() gin.HandlerFunc {
+    return func(c *gin.Context) {
+
+        tickets, err := s.service.GetAll(c)
+        if err != nil {
+            c.String(http.StatusInternalServerError, err.Error(), nil)
+            return 
+        }
+
+        c.JSON(200, tickets) 
+    }
+}
+
 func (s *Service) GetTicketsByCountry() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		destination := c.Param("dest")
 
-		tickets, err := s.service.GetTotalTickets(c, destination)
+		tickets, err := s.service.GetTicketByDestination(c, destination)
 		if err != nil {
 			c.String(http.StatusInternalServerError, err.Error(), nil)
 			return
@@ -37,7 +51,7 @@ func (s *Service) AverageDestination() gin.HandlerFunc {
 
 		destination := c.Param("dest")
 
-		avg, err := s.service.AverageDestination(c, destination)
+		avg, err := s.service.GetAveragePerCountry(c, destination)
 		if err != nil {
 			c.String(http.StatusInternalServerError, err.Error(), nil)
 			return
